@@ -3,252 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión de Pedidos</title>
-    <!-- Fuente moderna -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-color: #2b2b2b;
-            --success-color: #10b981; /* Verde esmeralda moderno */
-            --success-hover: #059669;
-            --danger-color: #ef4444; /* Rojo vibrante */
-            --danger-hover: #dc2626;
-            --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --text-color: #1f2937;
-            --text-muted: #6b7280;
-            --border-color: #e5e7eb;
-            --border-radius: 16px;
-            --shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            margin: 0;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        /* Barra de Navegación */
-        nav {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin: 0;
-            padding: 1.2rem;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-            background: rgba(0,0,0,0.03);
-        }
-
-        nav a.active {
-            background: var(--success-color);
-            color: white;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-
-        /* Contenedor Principal */
-        main {
-            max-width: 800px;
-            margin: 3rem auto;
-            padding: 0 1.5rem;
-        }
-
-        /* Secciones */
-        section {
-            display: none;
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        section.active {
-            display: block;
-        }
-
-        @keyframes slideUp {
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        /* Formularios */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #374151;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 0.85rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            background: rgba(255,255,255,0.9);
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--success-color);
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
-        }
-
-        /* Botones */
-        button {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 1rem;
-        }
-
-        .btn-success {
-            background-color: var(--success-color);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background-color: var(--success-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
-        }
-
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: var(--danger-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25);
-        }
-
-        /* Tabla de Pedidos */
-        .table-container {
-            overflow-x: auto;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        th, td {
-            padding: 1.2rem 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            background-color: #f9fafb;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background-color: #f9fafb;
-        }
-
-        .status-badge {
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .status-completed {
-            background-color: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-pending {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-cancelled {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-    </style>
+    <title>Sistema de Gestión de Pedidos - Aguas</title>
 </head>
 <body>
 
     <nav>
         <ul>
-            <li><a href="#" onclick="showSection(event, 'sec-login')" class="active">Inicio de Sesión</a></li>
+            <li><a href="#" onclick="showSection(event, 'sec-login')">Inicio de Sesión</a></li>
             <li><a href="#" onclick="showSection(event, 'sec-register')">Crear Cuenta</a></li>
             <li><a href="#" onclick="showSection(event, 'sec-order')">Realizar Pedido</a></li>
             <li><a href="#" onclick="showSection(event, 'sec-cancel')">Cancelar Pedido</a></li>
@@ -259,118 +20,144 @@
     <main>
 
         <!-- INICIO DE SECCIÓN: INICIO DE SESIÓN -->
-        <section id="sec-login" class="active">
-            <h2>Bienvenido de Nuevo</h2>
+        <section id="sec-login">
+            <h2>Inicio de Sesión</h2>
             <form id="form-login">
-                <div class="form-group">
-                    <label for="login-email">Correo Electrónico</label>
-                    <input type="email" id="login-email" placeholder="ejemplo@correo.com" required>
+                <div>
+                    <label for="login-user">Correo Electrónico o Teléfono</label>
+                    <input type="text" id="login-user" required>
                 </div>
-                <div class="form-group">
+                <div>
                     <label for="login-pass">Contraseña</label>
-                    <input type="password" id="login-pass" placeholder="••••••••" required>
+                    <input type="password" id="login-pass" required>
                 </div>
-                <button type="submit" class="btn-success">Iniciar Sesión</button>
+                <button type="submit">Iniciar Sesión</button>
             </form>
         </section>
         <!-- FIN DE SECCIÓN: INICIO DE SESIÓN -->
 
         <!-- INICIO DE SECCIÓN: CREAR CUENTA -->
-        <section id="sec-register">
-            <h2>Crear una Cuenta</h2>
+        <section id="sec-register" style="display: none;">
+            <h2>Crear Cuenta</h2>
             <form id="form-register">
-                <div class="form-group">
+                <div>
                     <label for="reg-name">Nombre Completo</label>
-                    <input type="text" id="reg-name" placeholder="Tu nombre completo" required>
+                    <input type="text" id="reg-name" required>
                 </div>
-                <div class="form-group">
+                <div>
+                    <label for="reg-address">Dirección de Envío</label>
+                    <input type="text" id="reg-address" required>
+                </div>
+                <div>
+                    <label for="reg-phone">Teléfono</label>
+                    <input type="tel" id="reg-phone" required>
+                </div>
+                <div>
                     <label for="reg-email">Correo Electrónico</label>
-                    <input type="email" id="reg-email" placeholder="ejemplo@correo.com" required>
+                    <input type="email" id="reg-email" required>
                 </div>
-                <div class="form-group">
+                <div>
                     <label for="reg-pass">Contraseña</label>
-                    <input type="password" id="reg-pass" placeholder="Crea una contraseña segura" required>
+                    <input type="password" id="reg-pass" required>
                 </div>
-                <button type="submit" class="btn-success">Registrarse</button>
+                <button type="submit">Crear Cuenta</button>
             </form>
         </section>
         <!-- FIN DE SECCIÓN: CREAR CUENTA -->
 
         <!-- INICIO DE SECCIÓN: REALIZAR PEDIDO -->
-        <section id="sec-order">
-            <h2>Realizar Nuevo Pedido</h2>
+        <section id="sec-order" style="display: none;">
+            <h2>Realizar Pedido</h2>
             <form id="form-order">
-                <div class="form-group">
-                    <label for="order-product">Seleccionar Producto</label>
-                    <select id="order-product" required>
-                        <option value="">-- Elige un producto --</option>
-                        <option value="prod1">Agua Purificada 20L</option>
-                        <option value="prod2">Dispensador de Agua Fría/Caliente</option>
-                        <option value="prod3">Pack 12 Botellas 500ml</option>
-                        <option value="prod4">Tomates Cherry (Caja 5kg)</option>
+                <div>
+                    <label for="order-name">Nombre</label>
+                    <input type="text" id="order-name" required>
+                </div>
+                <div>
+                    <label for="order-address">Dirección</label>
+                    <input type="text" id="order-address" required>
+                </div>
+                <div>
+                    <label for="order-phone">Teléfono</label>
+                    <input type="tel" id="order-phone" required>
+                </div>
+                <div>
+                    <label for="order-type">Tipo de bidón de agua</label>
+                    <select id="order-type" required>
+                        <option value="">-- Seleccione una opción --</option>
+                        <option value="plastico">Plástico</option>
+                        <option value="policarbonato">Policarbonato</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div>
                     <label for="order-qty">Cantidad</label>
                     <input type="number" id="order-qty" min="1" value="1" required>
                 </div>
-                <div class="form-group">
-                    <label for="order-details">Detalles Adicionales (Opcional)</label>
-                    <textarea id="order-details" rows="3" placeholder="Instrucciones de entrega, comentarios, etc."></textarea>
-                </div>
-                <button type="submit" class="btn-success">Confirmar Pedido</button>
+                <button type="submit">Crear el pedido</button>
             </form>
         </section>
         <!-- FIN DE SECCIÓN: REALIZAR PEDIDO -->
 
         <!-- INICIO DE SECCIÓN: CANCELAR PEDIDO -->
-        <section id="sec-cancel">
-            <h2>Cancelar un Pedido</h2>
+        <section id="sec-cancel" style="display: none;">
+            <h2>Cancelar Pedido</h2>
             <form id="form-cancel">
-                <div class="form-group">
+                <div>
                     <label for="cancel-id">ID del Pedido</label>
-                    <input type="text" id="cancel-id" placeholder="Ej: PED-1045" required>
+                    <input type="text" id="cancel-id" required>
                 </div>
-                <div class="form-group">
+                <div>
+                    <label for="cancel-name">Nombre del Cliente</label>
+                    <input type="text" id="cancel-name" required>
+                </div>
+                <div>
                     <label for="cancel-reason">Motivo de Cancelación</label>
-                    <textarea id="cancel-reason" rows="3" placeholder="Por favor, indícanos por qué deseas cancelar el pedido" required></textarea>
+                    <textarea id="cancel-reason" rows="3" required></textarea>
                 </div>
-                <button type="submit" class="btn-danger">Cancelar Pedido</button>
+                <button type="submit">Cancelar Pedido</button>
             </form>
         </section>
         <!-- FIN DE SECCIÓN: CANCELAR PEDIDO -->
 
         <!-- INICIO DE SECCIÓN: VER PEDIDOS -->
-        <section id="sec-view">
-            <h2>Historial de Pedidos</h2>
-            <div class="table-container">
-                <table>
+        <section id="sec-view" style="display: none;">
+            <h2>Ver Pedidos</h2>
+            <div>
+                <table border="1">
                     <thead>
                         <tr>
                             <th>ID Pedido</th>
-                            <th>Producto</th>
-                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Tipo de Bidón</th>
+                            <th>Cantidad</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>PED-1042</strong></td>
-                            <td>Agua Purificada 20L (x2)</td>
-                            <td>04/06/2026</td>
-                            <td><span class="status-badge status-completed">Entregado</span></td>
+                            <td><strong>PED-101</strong></td>
+                            <td>Juan Pérez</td>
+                            <td>Av. Siempreviva 123</td>
+                            <td>Policarbonato</td>
+                            <td>2</td>
+                            <td><span>Entregado</span></td>
                         </tr>
                         <tr>
-                            <td><strong>PED-1045</strong></td>
-                            <td>Tomates Cherry (Caja 5kg)</td>
-                            <td>05/06/2026</td>
-                            <td><span class="status-badge status-pending">En Camino</span></td>
+                            <td><strong>PED-102</strong></td>
+                            <td>María González</td>
+                            <td>Calle Falsa 456</td>
+                            <td>Plástico</td>
+                            <td>1</td>
+                            <td><span>En Camino</span></td>
                         </tr>
                         <tr>
-                            <td><strong>PED-1038</strong></td>
-                            <td>Dispensador de Agua</td>
-                            <td>01/06/2026</td>
-                            <td><span class="status-badge status-cancelled">Cancelado</span></td>
+                            <td><strong>PED-103</strong></td>
+                            <td>Carlos López</td>
+                            <td>Pasaje Sol 789</td>
+                            <td>Policarbonato</td>
+                            <td>3</td>
+                            <td><span>Cancelado</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -386,32 +173,16 @@
             // Evitar comportamiento por defecto en los enlaces solo si se envió el evento
             if(event) event.preventDefault();
 
-            // 1. Ocultar todas las secciones
+            // 1. Ocultar todas las secciones usando display: none
             const sections = document.querySelectorAll('section');
             sections.forEach(sec => {
-                sec.classList.remove('active');
+                sec.style.display = 'none';
             });
 
-            // 2. Quitar clase active de todos los enlaces de navegación
-            const links = document.querySelectorAll('nav a');
-            links.forEach(link => {
-                link.classList.remove('active');
-            });
-
-            // 3. Mostrar la sección deseada y añadir la clase de animación
+            // 2. Mostrar la sección deseada usando display: block
             const targetSection = document.getElementById(sectionId);
             if(targetSection) {
-                targetSection.classList.add('active');
-                
-                // Reiniciar la animación (truco simple)
-                targetSection.style.animation = 'none';
-                targetSection.offsetHeight; // trigger reflow
-                targetSection.style.animation = null; 
-            }
-
-            // 4. Marcar el enlace clicado como activo
-            if(event) {
-                event.currentTarget.classList.add('active');
+                targetSection.style.display = 'block';
             }
         }
 
