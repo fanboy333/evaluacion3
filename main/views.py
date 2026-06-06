@@ -6,7 +6,7 @@ from .forms import ProductoForm
 
 # VIEWS DE PRODUCTOS
 def producto_list(request):
-    return render(request, 'main/producto/producto_list.html', {'productos': Producto.objects.get()})
+    return render(request, 'main/producto/producto_list.html', {'productos': Producto.objects.all()})
 
 def producto_create(request):
     form = ProductoForm(request.POST or None, request.FILES or None)
@@ -14,7 +14,7 @@ def producto_create(request):
         if form.is_valid():
             form.save()
             return redirect('prodicto_list')
-    return render(request, 'main/producto/producto_create.html')
+    return render(request, 'main/producto/producto_create.html', {'form': form})
 
 def producto_delete(request):
     return render(request, 'main/producto/producto_delete.html')
