@@ -1,0 +1,13 @@
+{% extends "main/index.html" %}
+
+{% block content %}
+<section id="sec-create-product">
+    <h2>Crear Nuevo Producto</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{form}}
+        
+    </form>
+</section>
+{% endblock  %}

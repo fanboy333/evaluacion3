@@ -1,0 +1,38 @@
+{% extends "main/index.html" %}
+
+{% block content %}
+<!-- INICIO DE SECCIÓN: VER PRODUCTOS -->
+<section id="sec-products">
+    <h2>Productos Disponibles</h2>
+    
+    {% if productos %}
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Material</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.get_material_display }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" style="max-width: 100px; max-height: 100px;">
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay productos registrados.</p>
+    {% endif %}
+</section>
+<!-- FIN DE SECCIÓN: VER PRODUCTOS -->
+{% endblock %}
