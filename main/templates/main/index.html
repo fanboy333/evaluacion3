@@ -20,7 +20,24 @@
 
     <main>
 
-    {% block content %}{% endblock  %}
+        <!-- SECCIÓN DE INICIO (SOLO SE MUESTRA EN LA RAÍZ) -->
+        {% if request.path == '/' %}
+        <section>
+            <h1>Hola somos Aguas Don Dino</h1>
+            <p>
+                Somos una empresa comprometida con llevar agua purificada de la más alta calidad a tu hogar u oficina. Nos encargamos de que cada bidón cumpla con los más altos estándares de frescura y pureza para el bienestar de tu familia.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi finibus ac leo in congue. In convallis rhoncus nisl sed hendrerit. Phasellus pellentesque eleifend nulla. Etiam tristique justo diam, rhoncus accumsan ex euismod eget. Nam sollicitudin augue sit amet est vestibulum porta. Aliquam nec arcu id elit dictum viverra. Proin tempus eleifend elit, sed scelerisque odio viverra eu. Cras convallis lorem nec metus sollicitudin, eget imperdiet nisl tristique.
+            </p>
+            <p>
+                Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque.
+            </p>
+        </section>
+        <hr>
+        {% endif %}
+
+        {% block content %}{% endblock %}
 
     </main>
 
