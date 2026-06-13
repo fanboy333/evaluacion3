@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Pedidos - Aguas</title>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav>
+        <ul>
+            <li><a href="">Inicio de Sesión</a></li>
+            <li><a href="">Crear Cuenta</a></li>
+            <li><a href="">Ver Pedidos</a></li>
+            <li><a href="{% url 'product_list' %}">Ver Productos</a></li>
+            <li><a href="{% url 'product_create_select' %}">Crear Productos</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>
