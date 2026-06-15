@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from .models import Bidon
 from .forms import BidonForm, ProductoForm, CategoriaForm
 
@@ -19,7 +20,10 @@ def bidon_create(request):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return redirect('producto_list')
+            messages.success(request, '¡Bidón creado con éxito!')
+            return redirect('product_list')
+        else:
+            messages.error(request, 'Hubo un error al intentar crear el bidón. Por favor verifica los datos.')
     return render(request, 'main/producto/bidon_create.html', {'form': form})
 
 def producto_create(request):
@@ -27,7 +31,10 @@ def producto_create(request):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return redirect('producto_list')
+            messages.success(request, '¡Producto creado con éxito!')
+            return redirect('product_list')
+        else:
+            messages.error(request, 'Hubo un error al intentar crear el producto. Por favor verifica los datos.')
     return render(request, 'main/producto/producto_create.html', {'form': form})
 
 def producto_delete(request):
@@ -40,7 +47,10 @@ def categoria_create(request):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return redirect('home')
+            messages.success(request, '¡Categoría creada con éxito!')
+            return redirect('product_create_select')
+        else:
+            messages.error(request, 'Hubo un error al intentar crear la categoría. Por favor verifica los datos.')
     return render(request, 'main/categoria/categoria_create.html', {'form': form})
 
 # VIEWS DE PEDIDOS

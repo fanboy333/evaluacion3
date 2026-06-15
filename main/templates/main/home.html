@@ -1,16 +1,35 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-<section>
-    <h1>Hola somos Aguas Don Dino</h1>
-    <p>
-        Somos una empresa comprometida con llevar agua purificada de la más alta calidad a tu hogar u oficina. Nos encargamos de que cada bidón cumpla con los más altos estándares de frescura y pureza para el bienestar de tu familia.
-    </p>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi finibus ac leo in congue. In convallis rhoncus nisl sed hendrerit. Phasellus pellentesque eleifend nulla. Etiam tristique justo diam, rhoncus accumsan ex euismod eget. Nam sollicitudin augue sit amet est vestibulum porta. Aliquam nec arcu id elit dictum viverra. Proin tempus eleifend elit, sed scelerisque odio viverra eu. Cras convallis lorem nec metus sollicitudin, eget imperdiet nisl tristique.
-    </p>
-    <p>
-        Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque.
-    </p>
-</section>
-{% endblock %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card-custom p-5 my-4">
+            <div class="text-center mb-4">
+                <h1 class="display-5 mb-3">¡Bienvenido a Aguas Don Dino!</h1>
+                <p class="lead text-muted">El agua más pura para tu hogar y oficina, directo desde el Valle de Azapa.</p>
+                <div style="width: 80px; height: 4px; background-color: var(--primary-dark); margin: 20px auto; border-radius: 2px;"></div>
+            </div>
+            
+            <div class="row g-4 mt-2">
+                <div class="col-md-6">
+                    <h3 class="h5 mb-3" style="color: var(--earth-brown); border-left: 4px solid var(--primary-dark); padding-left: 10px;">¿Quiénes Somos?</h3>
+                    <p class="text-secondary lh-lg" style="text-align: justify;">
+                        Somos una empresa comprometida con llevar agua purificada de la más alta calidad a tu hogar u oficina. Nos encargamos de que cada bidón cumpla con los más altos estándares de frescura y pureza para el bienestar de tu familia.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="h5 mb-3" style="color: var(--earth-brown); border-left: 4px solid var(--primary-dark); padding-left: 10px;">Nuestra Calidad</h3>
+                    <p class="text-secondary lh-lg" style="text-align: justify;">
+                        Trabajamos con procesos avanzados de filtración y desmineralización para asegurar que cada gota de agua sea liviana, pura y refrescante. Valoramos el servicio y el compromiso con nuestros clientes en Arica.
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <a href="{% url 'product_list' %}" class="btn btn-primary-custom btn-lg px-4 py-2 me-2">Ver Productos</a>
+                <a href="{% url 'product_create_select' %}" class="btn btn-secondary-custom btn-lg px-4 py-2">Administrar Tienda</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
