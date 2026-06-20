@@ -1,6 +1,31 @@
-<!-- INICIO DE SECCIÓN: INICIO DE SESIÓN -->
-<section id="sec-login">
-    <h2>Inicio de Sesión</h2>
-    <!-- Aquí irá el formulario de Django -->
-</section>
-<!-- FIN DE SECCIÓN: INICIO DE SESIÓN -->
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card-custom p-4">
+            <div class="text-center mb-4">
+                <i class="bi bi-person-circle display-4" style="color: var(--primary-dark);"></i>
+                <h2 class="mt-2 h3">Inicio de Sesión</h2>
+                <p class="text-muted small">Ingresa tus credenciales para acceder a tu cuenta</p>
+            </div>
+            
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form }}
+                
+                <button type="submit" class="btn btn-primary-custom w-100 py-2 mt-3">Ingresar</button>
+            </form>
+            
+            <hr class="my-4" style="border-top: 1px solid var(--primary-light);">
+            
+            <div class="text-center">
+                <p class="mb-0 text-muted">¿No tienes una cuenta?</p>
+                <a href="{% url 'register' %}" class="btn btn-secondary-custom w-100 py-2 mt-2">Crear Cuenta</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

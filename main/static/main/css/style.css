@@ -61,12 +61,11 @@ main {
     border: 1px solid var(--primary-light);
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(21, 93, 39, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: box-shadow 0.2s ease;
     overflow: hidden;
 }
 
 .card-custom:hover {
-    transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(21, 93, 39, 0.1);
 }
 

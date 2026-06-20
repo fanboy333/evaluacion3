@@ -1,0 +1,70 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center my-4">
+    <div class="col-12">
+        <div class="card-custom p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                <div>
+                    <h2 class="m-0"><i class="bi bi-people-fill me-2"></i>Gestión de Cuentas</h2>
+                    <p class="text-muted mb-0 small">Administra los roles de los usuarios registrados en el sistema.</p>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-custom mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="ps-4">Usuario</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Rol Actual</th>
+                            <th scope="col" class="pe-4 text-end">Cambiar Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in users %}
+                        <tr>
+                            <td class="ps-4">
+                                <strong>{{ u.username }}</strong>
+                                {% if u == user %}
+                                <span class="badge bg-secondary ms-1">Tú</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ u.email|default:"Sin correo electrónico" }}</td>
+                            <td>
+                                {% if u.profile.role == 'ADMIN' %}
+                                <span class="badge-primary-custom"><i class="bi bi-shield-fill-check me-1"></i>{{ u.profile.get_role_display }}</span>
+                                {% elif u.profile.role == 'DELIVERY' %}
+                                <span class="badge-earth-custom"><i class="bi bi-truck me-1"></i>{{ u.profile.get_role_display }}</span>
+                                {% else %}
+                                <span class="badge-earth-custom" style="background-color: var(--pale-green); border-color: var(--primary-light); color: var(--earth-brown);"><i class="bi bi-person me-1"></i>{{ u.profile.get_role_display }}</span>
+                                {% endif %}
+                            </td>
+                            # AQUÍ ESTÁ EL QUERIDO FORMULARIO
+                            <td class="pe-4">
+                                <form method="POST" class="d-flex align-items-center justify-content-end gap-2">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ u.id }}">
+                                    <select name="role" class="form-select form-select-sm" style="max-width: 180px; border-color: var(--primary-light); border-radius: 6px;">
+                                        {% for role_code, role_name in roles_choices %}
+                                        <option value="{{ role_code }}" {% if u.profile.role == role_code %}selected{% endif %}>{{ role_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn btn-primary-custom btn-sm px-3" style="border-radius: 6px;">Actualizar</button>
+                                </form>
+                            </td>
+                            # y aqui cierra xd
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center p-4 text-muted">No hay otros usuarios registrados.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
