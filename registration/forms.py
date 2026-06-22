@@ -16,7 +16,6 @@ class CustomUserCreationForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=commit)
-        # Create profile, default role (CLIENTE) will be applied automatically by the model
         profile, created = Profile.objects.get_or_create(user=user)
         profile.role = Profile.Roles.CLIENTE
         profile.save()

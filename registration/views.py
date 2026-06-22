@@ -40,7 +40,7 @@ def logout_view(request):
     return redirect('home')
 
 def manage_accounts_view(request):
-    # Esto revisa si el usuario está como admin
+    # esto revisa si el usuario esta como admin 
     if not request.user.is_authenticated or request.user.profile.role != Profile.Roles.ADMINISTRADOR:
         messages.error(request, 'No tienes permisos para acceder a esta sección.')
         return redirect('home')
@@ -55,7 +55,6 @@ def manage_accounts_view(request):
             messages.success(request, f'Rol de {target_user.username} actualizado a {target_user.profile.get_role_display()}.')
         return redirect('manage_accounts')
         
-    # Get all users (ordered by username)
     users = User.objects.all().select_related('profile').order_by('username')
     roles_choices = Profile.Roles.choices
     return render(request, 'registration/manage_accounts.html', {
