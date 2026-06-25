@@ -5,7 +5,7 @@
     <div class="col-md-8 col-lg-6">
         <div class="card card-custom">
             <div class="card-header card-custom-header py-3 text-center">
-                <h2 class="h4 m-0">Agregar Nuevo Producto</h2>
+                <h2 class="h4 m-0">Editar Producto: {{ producto.nombre }}</h2>
             </div>
             <div class="card-body p-4">
                 <form method="POST" enctype="multipart/form-data">
@@ -14,8 +14,8 @@
                     {{ form }}
                     
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{% url 'product_create_select' %}" class="btn btn-secondary-custom px-4">Cancelar</a>
-                        <button type="submit" class="btn btn-danger-custom px-4">Agregar</button>
+                        <a href="{% url 'product_list' %}" class="btn btn-secondary-custom px-4">Cancelar</a>
+                        <button type="submit" class="btn btn-danger-custom px-4">Actualizar Producto</button>
                     </div>
                 </form>
             </div>

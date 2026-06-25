@@ -1,0 +1,83 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Botón Volver -->
+    <div class="mb-4">
+        <a href="{% url 'tienda' %}" class="btn btn-secondary-custom d-inline-flex align-items-center gap-2 px-3 py-2" style="border-radius: 8px; font-size: 0.95rem;">
+            <i class="bi bi-arrow-left"></i> Volver a la Tienda
+        </a>
+    </div>
+
+    <!-- Contenedor Principal del Detalle -->
+    <div class="card card-custom border-0 shadow-sm overflow-hidden p-4 p-md-5">
+        <div class="row g-5">
+            <!-- Columna de Imagen -->
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-white rounded-3 p-4 border" style="min-height: 300px; max-height: 450px;">
+                {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid h-100 object-fit-contain" style="max-height: 400px;">
+                {% else %}
+                <div class="text-muted d-flex flex-column align-items-center">
+                    <i class="bi bi-image" style="font-size: 4rem;"></i>
+                    <span class="italic mt-2">Sin imagen disponible</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Columna de Detalles -->
+            <div class="col-md-6 d-flex flex-column justify-content-between">
+                <div>
+                    <!-- Categoría y disponibilidad -->
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="badge bg-dark text-white px-3 py-1.5" style="border-radius: 20px; font-size: 0.8rem; font-weight: 600;">
+                            {{ producto.categoria.nombre }}
+                        </span>
+                        {% if producto.stock > 0 %}
+                        <span class="badge bg-success text-white px-3 py-1.5" style="border-radius: 20px; font-size: 0.8rem; font-weight: 600;">
+                            Disponible ({{ producto.stock }} uds)
+                        </span>
+                        {% else %}
+                        <span class="badge bg-danger text-white px-3 py-1.5" style="border-radius: 20px; font-size: 0.8rem; font-weight: 600;">
+                            Agotado
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Nombre del Producto -->
+                    <h1 class="display-5 mb-3 text-dark font-weight-bold" style="font-size: 2.2rem; color: var(--primary-dark) !important;">
+                        {{ producto.nombre }}
+                    </h1>
+
+                    <!-- Precio -->
+                    <div class="mb-4">
+                        <span class="fs-2 font-weight-bold px-3 py-2 text-dark bg-light rounded-3 d-inline-block border border-success-subtle" style="color: var(--primary-dark) !important; font-weight: 700;">
+                            ${{ producto.precio }}
+                        </span>
+                    </div>
+
+                    <!-- Descripción Detallada -->
+                    <div class="mb-4">
+                        <h3 class="h5 text-muted mb-2">Descripción del Producto</h3>
+                        <p class="text-muted lh-lg" style="font-size: 0.95rem; text-align: justify;">
+                            {{ producto.descripcion|default:"Este producto es fabricado y distribuido bajo los más altos estándares de calidad de Aguas Don Dino." }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botón de compra / agregar al carrito -->
+                <div class="mt-4">
+                    {% if producto.stock > 0 %}
+                    <a href="#" class="btn btn-primary-custom w-100 py-3 d-flex align-items-center justify-content-center gap-2" style="border-radius: 10px; font-size: 1.1rem;">
+                        <i class="bi bi-cart-plus-fill fs-5"></i> Agregar al Carrito
+                    </a>
+                    {% else %}
+                    <button class="btn btn-secondary w-100 py-3 d-flex align-items-center justify-content-center gap-2" style="border-radius: 10px; font-size: 1.1rem;" disabled>
+                        <i class="bi bi-x-circle-fill fs-5"></i> Temporalmente Agotado
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

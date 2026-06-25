@@ -35,8 +35,6 @@
                             <td>
                                 {% if u.profile.role == 'ADMIN' %}
                                 <span class="badge-primary-custom"><i class="bi bi-shield-fill-check me-1"></i>{{ u.profile.get_role_display }}</span>
-                                {% elif u.profile.role == 'DELIVERY' %}
-                                <span class="badge-earth-custom"><i class="bi bi-truck me-1"></i>{{ u.profile.get_role_display }}</span>
                                 {% else %}
                                 <span class="badge-earth-custom" style="background-color: var(--pale-green); border-color: var(--primary-light); color: var(--earth-brown);"><i class="bi bi-person me-1"></i>{{ u.profile.get_role_display }}</span>
                                 {% endif %}

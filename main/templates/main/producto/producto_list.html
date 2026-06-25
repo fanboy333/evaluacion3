@@ -11,35 +11,75 @@
                 </a>
             </div>
             
-            {% if productos %}
+            {% if bidones or otros %}
             <div class="table-responsive">
                 <table class="table table-hover table-striped table-custom mb-0">
                     <thead>
                         <tr>
                             <th scope="col" class="ps-4">ID</th>
+                            <th scope="col">Tipo</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Material</th>
+                            <th scope="col">Retornable</th>
                             <th scope="col">Precio</th>
-                            <th scope="col" class="pe-4">Imagen</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col" class="pe-4 text-end">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for producto in productos %}
+                        <!-- Bucle para Bidones -->
+                        {% for bidon in bidones %}
                         <tr>
-                            <td class="ps-4 font-weight-bold">#{{ producto.id }}</td>
-                            <td><strong>{{ producto.nombre }}</strong></td>
+                            <td class="ps-4 font-weight-bold">#{{ bidon.id }}</td>
+                            <td>{{ bidon.categoria.nombre }}</td>
+                            <td><strong>{{ bidon.nombre }}</strong></td>
+                            <td>{{ bidon.get_material_display }}</td>
+                            <td>{{ bidon.get_retornable_display }}</td>
+                            <td>${{ bidon.precio }}</td>
+                            <td>{{ bidon.stock }} uds</td>
                             <td>
-                                <span class="badge-earth-custom">{{ producto.get_material_display }}</span>
-                            </td>
-                            <td>
-                                <span class="badge-primary-custom">${{ producto.precio }}</span>
-                            </td>
-                            <td class="pe-4">
-                                {% if producto.imagen %}
-                                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-thumbnail bg-white" style="max-width: 80px; max-height: 80px; border-radius: 8px;">
+                                {% if bidon.imagen %}
+                                <img src="{{ bidon.imagen.url }}" alt="{{ bidon.nombre }}" class="img-thumbnail bg-white" style="max-width: 60px; max-height: 60px; object-fit: contain; border-radius: 6px;">
                                 {% else %}
                                 <span class="text-muted italic">Sin imagen</span>
                                 {% endif %}
+                            </td>
+                            <td class="pe-4 text-end">
+                                <a href="{% url 'bidon_edit' bidon.id %}" class="btn btn-sm btn-warning text-dark me-1" style="border-radius: 6px; font-weight: 600;">
+                                    <i class="bi bi-pencil-fill me-1"></i>Editar
+                                </a>
+                                <a href="{% url 'bidon_delete' bidon.id %}" class="btn btn-sm btn-danger" style="border-radius: 6px; font-weight: 600;">
+                                    <i class="bi bi-trash3-fill me-1"></i>Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        <!-- Bucle para Otros Productos -->
+                        {% for producto in otros %}
+                        <tr>
+                            <td class="ps-4 font-weight-bold">#{{ producto.id }}</td>
+                            <td>{{ producto.categoria.nombre }}</td>
+                            <td><strong>{{ producto.nombre }}</strong></td>
+                            <td><span class="text-muted">—</span></td>
+                            <td><span class="text-muted">—</span></td>
+                            <td>${{ producto.precio }}</td>
+                            <td>{{ producto.stock }} uds</td>
+                            <td>
+                                {% if producto.imagen %}
+                                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-thumbnail bg-white" style="max-width: 60px; max-height: 60px; object-fit: contain; border-radius: 6px;">
+                                {% else %}
+                                <span class="text-muted italic">Sin imagen</span>
+                                {% endif %}
+                            </td>
+                            <td class="pe-4 text-end">
+                                <a href="{% url 'producto_edit' producto.id %}" class="btn btn-sm btn-warning text-dark me-1" style="border-radius: 6px; font-weight: 600;">
+                                    <i class="bi bi-pencil-fill me-1"></i>Editar
+                                </a>
+                                <a href="{% url 'producto_delete' producto.id %}" class="btn btn-sm btn-danger" style="border-radius: 6px; font-weight: 600;">
+                                    <i class="bi bi-trash3-fill me-1"></i>Eliminar
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}

@@ -11,7 +11,7 @@
                 <p class="text-muted small">Ingresa tus credenciales para acceder a tu cuenta</p>
             </div>
             
-            <form method="post" novalidate>
+            <form method="POST" novalidate>
                 {% csrf_token %}
                 {{ form }}
                 

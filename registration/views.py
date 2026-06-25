@@ -25,6 +25,8 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # Crear el perfil del usuario directamente con rol CLIENTE
+            Profile.objects.create(user=user, role=Profile.Roles.CLIENTE)
             login(request, user)
             messages.success(request, '¡Registro exitoso! Bienvenido a Aguas Don Dino.')
             return redirect('home')

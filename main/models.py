@@ -21,6 +21,7 @@ class Bidon(models.Model):
     retornable = models.CharField(max_length=10, choices=RetornableSeleccion.choices, default=RetornableSeleccion.RETORNABLE)
     descripcion = models.TextField()
     precio = models.PositiveIntegerField()
+    stock = models.PositiveIntegerField(default=0)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='producto')
 
@@ -31,6 +32,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     precio = models.PositiveIntegerField()
+    stock = models.PositiveIntegerField(default=0)
     imagen = models.ImageField(upload_to='producto')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 

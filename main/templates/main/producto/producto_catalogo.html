@@ -1,0 +1,166 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 mb-2">Nuestra Tienda Online</h1>
+        <p class="lead text-muted">Elige el formato ideal de agua purificada para tu hogar u oficina</p>
+        <div style="width: 80px; height: 4px; background-color: var(--primary-dark); margin: 15px auto; border-radius: 2px;"></div>
+    </div>
+
+    <!-- ESTO ES PARA MOSTRAR BIDONES -->
+    {% if bidones or otros %}
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
+        {% for bidon in bidones %}
+        <div class="col">
+            <div class="card h-100 card-custom border-0 shadow-sm transition-hover">
+                <div class="position-relative overflow-hidden bg-white d-flex align-items-center justify-content-center border-bottom" style="height: 140px;">
+                    {% if bidon.imagen %}
+                    <img src="{{ bidon.imagen.url }}" alt="{{ bidon.nombre }}" class="img-fluid h-100 object-fit-contain p-2 transition-scale">
+                    {% else %}
+                    <div class="text-muted d-flex flex-column align-items-center">
+                        <i class="bi bi-image" style="font-size: 2.2rem;"></i>
+                        <span class="small italic mt-1" style="font-size: 0.75rem;">Sin imagen</span>
+                    </div>
+                    {% endif %}
+                    
+                    <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-white px-2 py-1" style="border-radius: 20px; font-size: 0.7rem; font-weight: 600;">
+                        {{ bidon.categoria.nombre }}
+                    </span>
+
+                    {% if bidon.stock == 0 %}
+                    <span class="position-absolute top-0 end-0 m-2 badge bg-danger text-white px-2 py-1" style="border-radius: 20px; font-size: 0.7rem; font-weight: 600;">
+                        Agotado
+                    </span>
+                    {% endif %}
+                </div>
+
+                <div class="card-body p-2 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="card-title h6 mb-1 text-truncate" title="{{ bidon.nombre }}" style="font-size: 0.9rem;">{{ bidon.nombre }}</h4>
+                        <div class="d-flex flex-wrap gap-1 mb-2">
+                            <span class="badge-earth-custom py-1 px-2" style="font-size: 0.65rem; border-radius: 12px; padding: 0.15rem 0.4rem !important;">
+                                <i class="bi bi-droplet-fill me-1"></i>{{ bidon.get_material_display }}
+                            </span>
+                            <span class="badge bg-light text-dark border py-1 px-2" style="border-radius: 12px; font-size: 0.65rem; font-weight: 500; padding: 0.15rem 0.4rem !important;">
+                                <i class="bi bi-arrow-repeat me-1"></i>{{ bidon.get_retornable_display }}
+                            </span>
+                        </div>
+                        
+                        <p class="card-text text-muted lh-relaxed mb-2" style="font-size: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            {{ bidon.descripcion|default:"Sin descripción disponible." }}
+                        </p>
+                        <div class="mt-1 mb-2 text-start">
+                            <a href="{% url 'bidon_detail' bidon.id %}" class="text-decoration-none text-success small fw-semibold transition-link-hover" style="font-size: 0.75rem;">
+                                Ver más...
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between pt-2 border-top mt-auto">
+                        <span class="badge-primary-custom px-2 py-1" style="font-size: 0.85rem; font-weight: 700;">${{ bidon.precio }}</span>
+                        {% if bidon.stock > 0 %}
+                        <a href="#" class="btn btn-primary-custom btn-sm d-flex align-items-center gap-1 px-2 py-1" style="font-size: 0.75rem; font-weight: 600; border-radius: 6px;">
+                            <i class="bi bi-cart-plus-fill"></i> Agregar
+                        </a>
+                        {% else %}
+                        <button class="btn btn-secondary btn-sm d-flex align-items-center gap-1 px-2 py-1" style="border-radius: 6px; font-weight: 600; font-size: 0.75rem;" disabled>
+                            <i class="bi bi-x-circle-fill"></i> Agotado
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- ESTO ES PARA MOSTRAR LOS PRODUCTOS -->
+        {% for producto in otros %}
+        <div class="col">
+            <div class="card h-100 card-custom border-0 shadow-sm transition-hover">
+                <div class="position-relative overflow-hidden bg-white d-flex align-items-center justify-content-center border-bottom" style="height: 140px;">
+                    {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid h-100 object-fit-contain p-2 transition-scale">
+                    {% else %}
+                    <div class="text-muted d-flex flex-column align-items-center">
+                        <i class="bi bi-image" style="font-size: 2.2rem;"></i>
+                        <span class="small italic mt-1" style="font-size: 0.75rem;">Sin imagen</span>
+                    </div>
+                    {% endif %}
+                    
+                    <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-white px-2 py-1" style="border-radius: 20px; font-size: 0.7rem; font-weight: 600;">
+                        {{ producto.categoria.nombre }}
+                    </span>
+
+                    {% if producto.stock == 0 %}
+                    <span class="position-absolute top-0 end-0 m-2 badge bg-danger text-white px-2 py-1" style="border-radius: 20px; font-size: 0.7rem; font-weight: 600;">
+                        Agotado
+                    </span>
+                    {% endif %}
+                </div>
+
+                <div class="card-body p-2 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="card-title h6 mb-1 text-truncate" title="{{ producto.nombre }}" style="font-size: 0.9rem;">{{ producto.nombre }}</h4>
+                        <p class="card-text text-muted lh-relaxed mb-2" style="font-size: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            {{ producto.descripcion|default:"Sin descripción disponible." }}
+                        </p>
+                        <div class="mt-1 mb-2 text-start">
+                            <a href="{% url 'producto_detail' producto.id %}" class="text-decoration-none text-success small fw-semibold transition-link-hover" style="font-size: 0.75rem;">
+                                Ver más...
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between pt-2 border-top mt-auto">
+                        <span class="badge-primary-custom px-2 py-1" style="font-size: 0.85rem; font-weight: 700;">${{ producto.precio }}</span>
+                        {% if producto.stock > 0 %}
+                        <a href="#" class="btn btn-primary-custom btn-sm d-flex align-items-center gap-1 px-2 py-1" style="font-size: 0.75rem; font-weight: 600; border-radius: 6px;">
+                            <i class="bi bi-cart-plus-fill"></i> Agregar
+                        </a>
+                        {% else %}
+                        <button class="btn btn-secondary btn-sm d-flex align-items-center gap-1 px-2 py-1" style="border-radius: 6px; font-weight: 600; font-size: 0.75rem;" disabled>
+                            <i class="bi bi-x-circle-fill"></i> Agotado
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-secondary text-center p-5 my-4" role="alert">
+        <h4 class="alert-heading">Catálogo vacío</h4>
+        <p class="mb-4 text-muted">Estamos preparando nuestros productos para ti. ¡Vuelve pronto!</p>
+        <a href="{% url 'home' %}" class="btn btn-primary-custom px-4">Volver al inicio</a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .transition-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    }
+    .transition-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(21, 93, 39, 0.15) !important;
+    }
+    .object-fit-cover {
+        object-fit: cover;
+    }
+    .transition-scale {
+        transition: transform 0.5s ease;
+    }
+    .col:hover .transition-scale {
+        transform: scale(1.05);
+    }
+    .transition-link-hover {
+        transition: color 0.2s ease;
+    }
+    .transition-link-hover:hover {
+        color: var(--primary-dark) !important;
+        text-decoration: underline !important;
+    }
+</style>
+{% endblock %}
