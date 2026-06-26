@@ -39,7 +39,7 @@
                                 <span class="badge-earth-custom" style="background-color: var(--pale-green); border-color: var(--primary-light); color: var(--earth-brown);"><i class="bi bi-person me-1"></i>{{ u.profile.get_role_display }}</span>
                                 {% endif %}
                             </td>
-                            # AQUÍ ESTÁ EL QUERIDO FORMULARIO
+                            <!-- ACÁ ESTÁ EL QUERIDO FORMULARIO PARA CAMBIAR EL ROL SIENDO ADMIN -->
                             <td class="pe-4">
                                 <form method="POST" class="d-flex align-items-center justify-content-end gap-2">
                                     {% csrf_token %}
@@ -52,7 +52,7 @@
                                     <button type="submit" class="btn btn-primary-custom btn-sm px-3" style="border-radius: 6px;">Actualizar</button>
                                 </form>
                             </td>
-                            # y aqui cierra xd
+                            <!-- Y AQUÍ CIERRA EL FORMULARIO -->
                         </tr>
                         {% empty %}
                         <tr>

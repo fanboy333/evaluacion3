@@ -13,3 +13,11 @@ class Profile(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.get_role_display()}"
+
+@receiver(post_save, sender=User)
+def create_user_profile_and_cart(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.get_or_create(user=instance)
+        from main.models import Carrito
+        Carrito.objects.get_or_create(usuario=instance)
+

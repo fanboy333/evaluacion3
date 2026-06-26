@@ -2,7 +2,7 @@ import random
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .utils import get_webpay_transaction
-from .models import Producto, Pedido
+from .models import Producto, Pedido, Carrito, ItemCarrito
 from .forms import ProductoForm, CategoriaForm
 
 # Create your views here.
@@ -125,7 +125,7 @@ def agregar_al_carrito(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     cantidad_actual = carrito.get(key, {}).get('cantidad', 0)
     
-    # Validamos stock del producto
+    # ACÁ ESTÁ LA VALIDACION PARA Q NO SE PASE DEL STOCK
     if cantidad_actual + 1 > producto.stock:
         messages.warning(request, f"No queda suficiente stock disponible para '{producto.nombre}'.")
     else:
@@ -224,27 +224,24 @@ def pago_exitoso(request):
         response = tx.commit(token) 
         
         if response.get('status') == 'AUTHORIZED':
-            carrito = request.session.get('carrito', {})
-            total = 0
+            carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
+            items = carrito.items.all().select_related('producto')
             
-            for pk, info in carrito.items():
-                cantidad = info.get('cantidad', 1)
-                try:
-                    producto = Producto.objects.get(pk=pk)
-                    total += producto.precio * cantidad
-                    
-                    if producto.stock >= cantidad:
-                        producto.stock -= cantidad
-                    else:
-                        producto.stock = 0
-                    producto.save()
-                except Producto.DoesNotExist:
-                    pass
+            total = response.get('amount')
+            for item in items:
+                cantidad = item.cantidad
+                producto = item.producto
+                
+                if producto.stock >= cantidad:
+                    producto.stock -= cantidad
+                else:
+                    producto.stock = 0
+                producto.save()
             
             Pedido.objects.create(usuario=request.user, total=total, estado='CONF')
             
-            request.session['carrito'] = {}
-            request.session.modified = True
+            # Limpiar los items del carrito en la base de datos
+            items.delete()
             
             return render(request, 'main/carrito/pago_exitoso.html', {
                 'response': response,

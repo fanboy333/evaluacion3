@@ -25,7 +25,6 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Crear el perfil del usuario directamente con rol CLIENTE
             Profile.objects.create(user=user, role=Profile.Roles.CLIENTE)
             login(request, user)
             messages.success(request, '¡Registro exitoso! Bienvenido a Aguas Don Dino.')
@@ -42,7 +41,6 @@ def logout_view(request):
     return redirect('home')
 
 def manage_accounts_view(request):
-    # esto revisa si el usuario esta como admin 
     if not request.user.is_authenticated or request.user.profile.role != Profile.Roles.ADMINISTRADOR:
         messages.error(request, 'No tienes permisos para acceder a esta sección.')
         return redirect('home')
