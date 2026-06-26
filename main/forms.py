@@ -1,10 +1,5 @@
 from django import forms
-from .models import Bidon, Categoria, Producto
-
-class BidonForm(forms.ModelForm):
-    class Meta:
-        model = Bidon
-        fields = '__all__'
+from .models import Categoria, Producto
 
 class ProductoForm(forms.ModelForm):
     class Meta:

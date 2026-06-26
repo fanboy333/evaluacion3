@@ -48,6 +48,22 @@
                         {{ producto.nombre }}
                     </h1>
 
+                    <!-- Especificaciones técnicas rápidas (solo si aplican) -->
+                    {% if producto.material != 'N/A' or producto.retornable != 'N/A' %}
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        {% if producto.material != 'N/A' %}
+                        <span class="badge-earth-custom py-2 px-3" style="font-size: 0.8rem; border-radius: 12px;">
+                            <i class="bi bi-droplet-fill me-1 text-primary"></i>Material: <strong>{{ producto.get_material_display }}</strong>
+                        </span>
+                        {% endif %}
+                        {% if producto.retornable != 'N/A' %}
+                        <span class="badge bg-light text-dark border py-2 px-3" style="border-radius: 12px; font-size: 0.8rem; font-weight: 500;">
+                            <i class="bi bi-arrow-repeat me-1 text-success"></i><strong>{{ producto.get_retornable_display }}</strong>
+                        </span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
                     <!-- Precio -->
                     <div class="mb-4">
                         <span class="fs-2 font-weight-bold px-3 py-2 text-dark bg-light rounded-3 d-inline-block border border-success-subtle" style="color: var(--primary-dark) !important; font-weight: 700;">
@@ -67,12 +83,12 @@
                 <!-- Botón de compra / agregar al carrito -->
                 <div class="mt-4">
                     {% if producto.stock > 0 %}
-                    <a href="#" class="btn btn-primary-custom w-100 py-3 d-flex align-items-center justify-content-center gap-2" style="border-radius: 10px; font-size: 1.1rem;">
+                    <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn btn-primary-custom w-100 py-3 d-flex align-items-center justify-content-center gap-2" style="border-radius: 10px; font-size: 1.1rem;">
                         <i class="bi bi-cart-plus-fill fs-5"></i> Agregar al Carrito
                     </a>
                     {% else %}
                     <button class="btn btn-secondary w-100 py-3 d-flex align-items-center justify-content-center gap-2" style="border-radius: 10px; font-size: 1.1rem;" disabled>
-                        <i class="bi bi-x-circle-fill fs-5"></i> Temporalmente Agotado
+                        <i class="bi bi-x-circle-fill"></i> Temporalmente Agotado
                     </button>
                     {% endif %}
                 </div>

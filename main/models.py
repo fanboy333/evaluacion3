@@ -9,27 +9,19 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
 
-class Bidon(models.Model):
+class Producto(models.Model):
     class MaterialSeleccion(models.TextChoices):
-        PLASTICO = 'PET', 'Plastico'
+        PLASTICO = 'PET', 'Plástico'
         POLICARBONATO = 'POL', 'Policarbonato'
+        NO_APLICA = 'N/A', 'No aplica'
     class RetornableSeleccion(models.TextChoices):
         RETORNABLE = 'RET', 'Retornable'
         NO_RETORNABLE = 'NO_RET', 'No Retornable'
-    nombre = models.CharField(max_length=100)
-    material = models.CharField(max_length=50, choices=MaterialSeleccion.choices, default=MaterialSeleccion.PLASTICO)
-    retornable = models.CharField(max_length=10, choices=RetornableSeleccion.choices, default=RetornableSeleccion.RETORNABLE)
-    descripcion = models.TextField()
-    precio = models.PositiveIntegerField()
-    stock = models.PositiveIntegerField(default=0)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    imagen = models.ImageField(upload_to='producto')
+        NO_APLICA = 'N/A', 'No aplica'
 
-    def __str__(self):
-        return self.nombre
-
-class Producto(models.Model):
     nombre = models.CharField(max_length=100)
+    material = models.CharField(max_length=50, choices=MaterialSeleccion.choices, default=MaterialSeleccion.NO_APLICA)
+    retornable = models.CharField(max_length=10, choices=RetornableSeleccion.choices, default=RetornableSeleccion.NO_APLICA)
     descripcion = models.TextField()
     precio = models.PositiveIntegerField()
     stock = models.PositiveIntegerField(default=0)
@@ -38,5 +30,16 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+from django.contrib.auth.models import User
+
+class Pedido(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    total = models.PositiveIntegerField()
+    estado = models.CharField(max_length=10, default='CONF')
+    creado_en = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Pedido #{self.id} - {self.usuario.username} - ${self.total}"
 
 

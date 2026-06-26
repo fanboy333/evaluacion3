@@ -8,13 +8,18 @@
                 <h2 class="h4 m-0">Agregar Nuevo Producto</h2>
             </div>
             <div class="card-body p-4">
+                <div class="text-end mb-3">
+                    <a href="{% url 'categoria_create' %}" class="btn btn-sm btn-outline-success" style="border-radius: 6px;">
+                        <i class="bi bi-folder-plus me-1"></i> Crear Nueva Categoría
+                    </a>
+                </div>
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     
                     {{ form }}
                     
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{% url 'product_create_select' %}" class="btn btn-secondary-custom px-4">Cancelar</a>
+                        <a href="{% url 'product_list' %}" class="btn btn-secondary-custom px-4">Cancelar</a>
                         <button type="submit" class="btn btn-danger-custom px-4">Agregar</button>
                     </div>
                 </form>
