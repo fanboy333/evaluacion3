@@ -26,6 +26,8 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             Profile.objects.create(user=user, role=Profile.Roles.CLIENTE)
+            from main.models import Carrito
+            Carrito.objects.create(usuario=user)
             login(request, user)
             messages.success(request, '¡Registro exitoso! Bienvenido a Aguas Don Dino.')
             return redirect('home')
