@@ -123,6 +123,5 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Credenciales Webpay — leídas desde .env
 WEBPAY_COMMERCE_CODE = config('WEBPAY_COMMERCE_CODE')
 WEBPAY_API_KEY = config('WEBPAY_API_KEY')
